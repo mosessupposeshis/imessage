@@ -22,7 +22,7 @@ make install-beeper
 
 The installer handles everything: Homebrew, dependencies, building, Beeper login, iMessage login, config, and LaunchAgent setup.
 
-After new commits or if you need to restatr the bridge:
+After new commits or if you need to restart the bridge:
 
 ```bash
 git clone https://github.com/mosessupposeshis/imessage.git
