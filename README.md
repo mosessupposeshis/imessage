@@ -15,7 +15,7 @@ macOS 13+ required (Ventura or later). Sign into iCloud on the Mac running the b
 ### With Beeper
 
 ```bash
-git clone https://github.com/lrhodin/imessage.git
+git clone https://github.com/mosessupposeshis/imessage.git
 cd imessage
 make install-beeper
 ```
@@ -25,7 +25,7 @@ The installer handles everything: Homebrew, dependencies, building, Beeper login
 ### With a Self-Hosted Homeserver
 
 ```bash
-git clone https://github.com/lrhodin/imessage.git
+git clone https://github.com/mosessupposeshis/imessage.git
 cd imessage
 make install
 ```
