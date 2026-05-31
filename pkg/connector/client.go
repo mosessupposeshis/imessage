@@ -1491,10 +1491,17 @@ func (c *IMClient) IsThisUser(_ context.Context, userID networkid.UserID) bool {
 }
 
 func (c *IMClient) GetCapabilities(ctx context.Context, portal *bridgev2.Portal) *event.RoomFeatures {
+	base := caps
 	if portal.RoomType == database.RoomTypeDM {
-		return capsDM
+		base = capsDM
 	}
-	return caps
+	if !c.Main.Config.ReadReceipts || !c.Main.Config.TypingNotifications {
+		modified := *base
+		modified.ReadReceipts = c.Main.Config.ReadReceipts
+		modified.TypingNotifications = c.Main.Config.TypingNotifications
+		return &modified
+	}
+	return base
 }
 
 // ============================================================================
@@ -5778,7 +5785,7 @@ func (c *IMClient) handleMatrixFile(ctx context.Context, msg *bridgev2.MatrixMes
 }
 
 func (c *IMClient) HandleMatrixTyping(ctx context.Context, msg *bridgev2.MatrixTyping) error {
-	if c.client == nil {
+	if c.client == nil || !c.Main.Config.TypingNotifications {
 		return nil
 	}
 	conv := c.portalToConversation(msg.Portal)
@@ -5791,7 +5798,7 @@ func (c *IMClient) HandleMatrixTyping(ctx context.Context, msg *bridgev2.MatrixT
 }
 
 func (c *IMClient) HandleMatrixReadReceipt(ctx context.Context, receipt *bridgev2.MatrixReadReceipt) error {
-	if c.client == nil {
+	if c.client == nil || !c.Main.Config.ReadReceipts {
 		return nil
 	}
 	conv := c.portalToConversation(receipt.Portal)
